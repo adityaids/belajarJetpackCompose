@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -62,6 +61,16 @@ private val nameList = listOf(
     "Ferrian",
     "Iqbal"
 )
+
+/*
+    in this code we learn about basic jetpack compose implementation like :
+    - composable anotation
+    - remember delegation to keep the variable value (property delegation)
+    - smallest component that we could use and combine
+    - make a list view with jetpack compose
+    - show default preview and custom preview
+    - composable function
+*/
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +82,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// this is our main layout, surface use to modify ui,
+// inside surface we use composable function to show the view
 @Composable
 fun HelloJetpackComposeApp() {
     Surface(
@@ -83,6 +94,10 @@ fun HelloJetpackComposeApp() {
     }
 }
 
+/*
+    this is customize preview, we can custom them (dark/light) and device to show
+    our preview
+*/
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Preview(showBackground = true, device = Devices.PIXEL_4, uiMode = UI_MODE_NIGHT_YES)
 @Composable
@@ -92,11 +107,22 @@ fun HelloJetpackComposeAppPreview() {
     }
 }
 
+/*
+    this is composable function, smallest part of view that we use to create the view
+    we can combine some view like text, button etc here, remember don't heavy proccess
+    and global variable or property here, composable function should be independent
+    because composable function can be called
+    several time because recomposition, it called recomposition
+    you can google it for detail.
+*/
+// this is composable function to create the list view
 @Composable
 fun GreetingList(names: List<String>) {
     if (names.isNotEmpty()) {
+        //this is creating the view on list position
         LazyColumn {
             items(names) { name ->
+                //this is view
                 Greeting(name)
             }
         }
@@ -107,6 +133,7 @@ fun GreetingList(names: List<String>) {
     }
 }
 
+//this is composable function to create a view
 @Composable
 fun Greeting(name: String) {
     var isExpanded by remember { mutableStateOf(false) }
@@ -155,11 +182,13 @@ fun Greeting(name: String) {
     }
 }
 
+// Here is default preview to show the smallest view that we included
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultPreview() {
     BelajarJetpackComposeTheme() {
+        //this is a view
         Greeting("Jetpack Compose")
     }
 }
