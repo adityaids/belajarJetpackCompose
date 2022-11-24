@@ -8,97 +8,41 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.aditya.belajarjetpackcompose.dto.Category
-import com.aditya.belajarjetpackcompose.dto.Menu
+import com.aditya.belajarjetpackcompose.model.BottomBarItem
+import com.aditya.belajarjetpackcompose.model.Menu
 import com.aditya.belajarjetpackcompose.ui.component.CategoryItem
+import com.aditya.belajarjetpackcompose.ui.component.HomeSection
 import com.aditya.belajarjetpackcompose.ui.component.MenuItem
-import com.aditya.belajarjetpackcompose.ui.component.SectionText
+import com.aditya.belajarjetpackcompose.ui.component.SearchBar
+import com.aditya.belajarjetpackcompose.ui.component.dummyBestSellerMenu
+import com.aditya.belajarjetpackcompose.ui.component.dummyCategory
+import com.aditya.belajarjetpackcompose.ui.component.dummyMenu
 import com.aditya.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
-
-val dummyCategory = listOf(
-    R.drawable.icon_category_all to R.string.category_all,
-    R.drawable.icon_category_americano to R.string.category_americano,
-    R.drawable.icon_category_cappuccino to R.string.category_cappuccino,
-    R.drawable.icon_category_espresso to R.string.category_espresso,
-    R.drawable.icon_category_frappe to R.string.category_frappe,
-    R.drawable.icon_category_latte to R.string.category_latte,
-    R.drawable.icon_category_macchiato to R.string.category_macchiato,
-    R.drawable.icon_category_mocha to R.string.category_mocha,
-).map { Category(it.first, it.second) }
-
-val dummyMenu = listOf(
-    Menu(
-        R.drawable.menu1,
-        "Tiramisu Ice Coffee",
-        "Rp18.000"
-    ),
-    Menu(
-        R.drawable.menu2,
-        "Americano Coffee",
-        "Rp18.000"
-    ),
-    Menu(
-        R.drawable.menu3,
-        "Cappucino Coffee",
-        "Rp18.000"
-    ),
-    Menu(
-        R.drawable.menu4,
-        "Ekspresso Coffee",
-        "Rp18.000"
-    )
-)
-
-val dummyBestSellerMenu = listOf(
-    Menu(
-        R.drawable.menu4,
-        "Ekspresso Coffee",
-        "Rp18.000"
-    ),
-    Menu(
-        R.drawable.menu2,
-        "Americano Coffee",
-        "Rp18.000"
-    ),
-    Menu(
-        R.drawable.menu1,
-        "Tiramisu Ice Coffee",
-        "Rp18.000"
-    ),
-    Menu(
-        R.drawable.menu3,
-        "Cappucino Coffee",
-        "Rp18.000"
-    )
-)
+import com.aditya.belajarjetpackcompose.ui.theme.LightGray
 
 class BelajarLayoutComposeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,56 +56,37 @@ class BelajarLayoutComposeActivity : ComponentActivity() {
 }
 
 @Composable
-fun jetCoffeeApp(
-    modifier: Modifier = Modifier
-) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Banner()
-        SectionText(title = stringResource(id = R.string.section_category))
-        CategoryRow()
-        SectionText(stringResource(R.string.section_favorite_menu))
-        MenuRow(dummyMenu)
-        SectionText(stringResource(R.string.section_best_seller_menu))
-        MenuRow(dummyBestSellerMenu)
+fun jetCoffeeApp(modifier: Modifier = Modifier) {
+    Scaffold(
+        bottomBar = { BottomBar() }
+    ) { innerPadding ->
+        Column(
+            modifier = modifier
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
+        ) {
+            Banner()
+            HomeSection(
+                title = stringResource(R.string.section_category),
+                content = { CategoryRow() }
+            )
+            HomeSection(
+                title = stringResource(R.string.section_favorite_menu),
+                content = { MenuRow(dummyMenu) }
+            )
+            HomeSection(
+                title = stringResource(R.string.section_best_seller_menu),
+                content = { MenuRow(dummyBestSellerMenu) }
+            )
+        }
     }
 }
 
 @Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-) {
-    TextField(
-        value = "",
-        onValueChange = {},
-        leadingIcon = {
-          Icon(imageVector = Icons.Default.Search,
-              contentDescription = null
-          )
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.surface,
-            disabledIndicatorColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-        ),
-        placeholder = {
-          Text(text = stringResource(id = R.string.placeholder_search))
-        },
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-            .heightIn(min = 48.dp)
-            .clip(RoundedCornerShape(16.dp))
-    )
-}
-
-@Composable
-fun Banner(
-    modifier: Modifier = Modifier
-) {
+fun Banner(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Image(
-            painter = painterResource(id = R.drawable.banner),
+            painter = painterResource(R.drawable.banner),
             contentDescription = "Banner Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.height(160.dp)
@@ -180,7 +105,7 @@ fun CategoryRow(
         modifier = modifier
     ) {
         items(dummyCategory, key = { it.textCategory }) { category ->
-            CategoryItem(category = category)
+            CategoryItem(category)
         }
     }
 }
@@ -196,36 +121,65 @@ fun MenuRow(
         modifier = modifier
     ) {
         items(listMenu, key = { it.title }) { menu ->
-            MenuItem(menu = menu)
+            MenuItem(menu)
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun CategoryRowPreview() {
-    BelajarJetpackComposeTheme {
-        CategoryRow()
+fun BottomBar(
+    modifier: Modifier = Modifier
+) {
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.primary,
+        modifier = modifier
+    ) {
+        val navigationItems = listOf(
+            BottomBarItem(
+                title = stringResource(R.string.menu_home),
+                icon = Icons.Default.Home
+            ),
+            BottomBarItem(
+                title = stringResource(R.string.menu_favorite),
+                icon = Icons.Default.Favorite
+            ),
+            BottomBarItem(
+                title = stringResource(R.string.menu_profile),
+                icon = Icons.Default.AccountCircle
+            ),
+        )
+        navigationItems.map {
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        imageVector = it.icon,
+                        contentDescription = it.title
+                    )
+                },
+                label = {
+                    Text(it.title)
+                },
+                selected = it.title == navigationItems[0].title,
+                unselectedContentColor = LightGray,
+                onClick = {}
+            )
+        }
     }
 }
-@Preview(showBackground = true)
+
 @Composable
-fun SearchBarPreview() {
-    BelajarJetpackComposeTheme {
-        SearchBar()
+@Preview(showBackground = true)
+fun CategoryRowPreview() {
+    BelajarJetpackComposeTheme() {
+        CategoryRow()
     }
 }
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
-fun jetCoffeeAppPreview() {
-    jetCoffeeApp()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview2() {
-    BelajarJetpackComposeTheme {
-
+fun JetCoffeeAppPreview() {
+    BelajarJetpackComposeTheme() {
+        jetCoffeeApp()
     }
 }

@@ -1,4 +1,4 @@
-package com.aditya.belajarjetpackcompose.dto
+package com.aditya.belajarjetpackcompose.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

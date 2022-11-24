@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -21,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aditya.belajarjetpackcompose.R
-import com.aditya.belajarjetpackcompose.dto.Menu
+import com.aditya.belajarjetpackcompose.model.Menu
 
 @Composable
 fun MenuItem(
@@ -59,6 +58,53 @@ fun MenuItem(
         }
     }
 }
+
+val dummyMenu = listOf(
+    Menu(
+        R.drawable.menu1,
+        "Tiramisu Ice Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu2,
+        "Americano Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu3,
+        "Cappucino Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu4,
+        "Ekspresso Coffee",
+        "Rp18.000"
+    )
+)
+
+val dummyBestSellerMenu = listOf(
+    Menu(
+        R.drawable.menu4,
+        "Ekspresso Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu2,
+        "Americano Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu1,
+        "Tiramisu Ice Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu3,
+        "Cappucino Coffee",
+        "Rp18.000"
+    )
+)
+
 
 @Preview(showBackground = true)
 @Composable
