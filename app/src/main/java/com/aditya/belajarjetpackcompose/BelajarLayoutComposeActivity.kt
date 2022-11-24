@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -35,7 +37,10 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aditya.belajarjetpackcompose.dto.Category
+import com.aditya.belajarjetpackcompose.dto.Menu
 import com.aditya.belajarjetpackcompose.ui.component.CategoryItem
+import com.aditya.belajarjetpackcompose.ui.component.MenuItem
+import com.aditya.belajarjetpackcompose.ui.component.SectionText
 import com.aditya.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
 
 val dummyCategory = listOf(
@@ -49,6 +54,52 @@ val dummyCategory = listOf(
     R.drawable.icon_category_mocha to R.string.category_mocha,
 ).map { Category(it.first, it.second) }
 
+val dummyMenu = listOf(
+    Menu(
+        R.drawable.menu1,
+        "Tiramisu Ice Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu2,
+        "Americano Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu3,
+        "Cappucino Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu4,
+        "Ekspresso Coffee",
+        "Rp18.000"
+    )
+)
+
+val dummyBestSellerMenu = listOf(
+    Menu(
+        R.drawable.menu4,
+        "Ekspresso Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu2,
+        "Americano Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu1,
+        "Tiramisu Ice Coffee",
+        "Rp18.000"
+    ),
+    Menu(
+        R.drawable.menu3,
+        "Cappucino Coffee",
+        "Rp18.000"
+    )
+)
+
 class BelajarLayoutComposeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +112,17 @@ class BelajarLayoutComposeActivity : ComponentActivity() {
 }
 
 @Composable
-fun jetCoffeeApp() {
-    Column {
+fun jetCoffeeApp(
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Banner()
+        SectionText(title = stringResource(id = R.string.section_category))
+        CategoryRow()
+        SectionText(stringResource(R.string.section_favorite_menu))
+        MenuRow(dummyMenu)
+        SectionText(stringResource(R.string.section_best_seller_menu))
+        MenuRow(dummyBestSellerMenu)
     }
 }
 
@@ -118,10 +177,26 @@ fun CategoryRow(
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
-        modifier = modifier.padding(vertical = 8.dp)
+        modifier = modifier
     ) {
         items(dummyCategory, key = { it.textCategory }) { category ->
             CategoryItem(category = category)
+        }
+    }
+}
+
+@Composable
+fun MenuRow(
+    listMenu: List<Menu>,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
+    ) {
+        items(listMenu, key = { it.title }) { menu ->
+            MenuItem(menu = menu)
         }
     }
 }
