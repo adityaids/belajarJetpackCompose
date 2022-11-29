@@ -26,4 +26,7 @@
     <string name="enter_celsius">Enter temperature in Celsius</string>
     <string name="temperature_fahrenheit">Temperature in Fahrenheit : %s</string>
     <string name="enter_temperature">Enter temperature in %s</string>
+    <string name="title_activity_belajar_state_and_scaffold_state">
+        BelajarStateAndScaffoldStateActivity
+    </string>
 </resources>

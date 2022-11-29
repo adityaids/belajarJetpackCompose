@@ -1,4 +1,4 @@
-package com.aditya.belajarjetpackcompose
+package com.aditya.belajarjetpackcompose.modul.main
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aditya.belajarjetpackcompose.R
 import com.aditya.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
 
 private val nameList = listOf(
