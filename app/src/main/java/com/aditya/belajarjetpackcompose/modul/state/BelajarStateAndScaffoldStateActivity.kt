@@ -1,5 +1,6 @@
 package com.aditya.belajarjetpackcompose.modul.state
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -50,6 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aditya.belajarjetpackcompose.R
 import com.aditya.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class BelajarStateAndScaffoldStateActivity : ComponentActivity() {
@@ -225,4 +228,12 @@ fun PreviewMyDrawerApp() {
     BelajarJetpackComposeTheme {
         MyDrawerActivity()
     }
+}
+
+class MyNavDrawerState(
+    val scaffoldState: ScaffoldState,
+    private val scope: CoroutineScope,
+    private val context: Context
+) {
+
 }
